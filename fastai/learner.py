@@ -176,8 +176,8 @@ class Learner():
 
     def one_batch(self, i, b):
         self.iter = i
-        self._split(b)
-        self._with_events(self._do_one_batch, 'batch', CancelBatchException)
+        #self._split(b)
+        #self._with_events(self._do_one_batch, 'batch', CancelBatchException)
 
     def _do_epoch_train(self):
         self.dl = self.dls.train
