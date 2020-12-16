@@ -180,7 +180,6 @@ class Learner():
         self.opt.zero_grad()
 
     def one_batch(self, i, b):
-        print(b)
         self.iter = i
         self._split(b)
         self._with_events(self._do_one_batch, 'batch', CancelBatchException)
