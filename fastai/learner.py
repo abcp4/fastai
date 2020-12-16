@@ -162,9 +162,9 @@ class Learner():
            #if(i<10000):
            #   raise SkipItemException
            #else:
-           #o=next(iter(self.dl))
-           if(i%100==0):
-             print(i)
+           o=next(iter(self.dl))
+           #if(i%100==0):
+           print(i)
              #print(o)
         #for o in enumerate(self.dl): self.one_batch(*o)
 
