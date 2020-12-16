@@ -161,7 +161,7 @@ class Learner():
         self.dl.do_item(10000)
         for i in range(self.n_iter):
            b=self.dl.do_item(i)
-           #self.one_batch(b)
+           self.one_batch(b)
            #if(i<10000):
            #   raise SkipItemException
            #else:
