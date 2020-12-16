@@ -158,7 +158,6 @@ class Learner():
     def all_batches(self):
         print('abcp4')
         self.n_iter = len(self.dl)
-        self.dl.do_item(10000)
         #for i in range(self.n_iter):
            #if(i<10000):
            #   raise SkipItemException
@@ -167,7 +166,7 @@ class Learner():
            #if(i%100==0):
            #print(i)
              #print(o)
-        #for o in enumerate(self.dl): self.one_batch(*o)
+        for o in enumerate(self.dl): self.one_batch(*o)
 
     def _do_one_batch(self):
         #self.pred = self.model(*self.xb)
