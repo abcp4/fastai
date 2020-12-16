@@ -166,10 +166,7 @@ class Learner():
     def _skip_step(self):
         print(self.opt)
         print(self.lr)
-        print(dir(self.opt)
-
-
-
+        print(dir(self.opt))
     def _do_one_batch(self):
         self.pred = self.model(*self.xb)
         self('after_pred')
