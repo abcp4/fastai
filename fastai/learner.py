@@ -161,6 +161,7 @@ class Learner():
         for o in enumerate(self.dl): self.one_batch(*o)
 
     def _do_one_batch(self):
+        pass
         #self.pred = self.model(*self.xb)
         #self('after_pred')
         #if len(self.yb): self.loss = self.loss_func(self.pred, *self.yb)
