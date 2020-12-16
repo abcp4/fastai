@@ -160,19 +160,11 @@ class Learner():
         finally:   self(f'after_{event_type}')        ;final()
            
            
-    def get_idxs(self):
-        return [x for x in range(self.n_skip,1000000)]
-
     def all_batches(self):
         print('abcp4')
-        self.n_iter = len(self.dl)
-        self.dl.sample  = types.MethodType(get_idxs, dl)
         #skip till last iteration
         #skip till last iteration
-         
-        for o in enumerate(self.dl): self.one_batch(*o)
-        self.n_skip = 0 #completou todos os batches
-                      
+        for o in enumerate(self.dl): self.one_batch(*o)                      
         
     def _do_one_batch(self):
         self.pred = self.model(*self.xb)
