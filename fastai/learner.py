@@ -159,13 +159,16 @@ class Learner():
         print('abcp4')
         self.n_iter = len(self.dl)
         for i in range(n_skip):
+           self.iter = i
            self._skip_step()
          
         for o in enumerate(self.dl): self.one_batch(*o)
                       
     def _skip_step(self):
-        print(self.lr)
+        #print(self.lr)
         self.opt.step()
+        self.opt.zero_grad()
+        
     def _do_one_batch(self):
         self.pred = self.model(*self.xb)
         self('after_pred')
