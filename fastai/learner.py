@@ -10,6 +10,9 @@ from .data.all import *
 from .optimizer import *
 from .callback.core import *
 
+import types
+
+
 # Cell
 #nbdev_comment _all_ = ['CancelFitException', 'CancelEpochException', 'CancelTrainException', 'CancelValidException', 'CancelBatchException']
 
@@ -81,7 +84,7 @@ _loop = ['Start Fit', 'before_fit', 'Start Epoch Loop', 'before_epoch', 'Start T
 class Learner():
     def __init__(self, dls, model, loss_func=None, opt_func=Adam, lr=defaults.lr, splitter=trainable_params, cbs=None,
                  metrics=None, path=None, model_dir='models', wd=None, wd_bn_bias=False, train_bn=True,
-                 moms=(0.95,0.85,0.95)):
+                 moms=(0.95,0.85,0.95),n_skip=0):
         path = Path(path) if path is not None else getattr(dls, 'path', Path('.'))
         if loss_func is None:
             loss_func = getattr(dls.train_ds, 'loss_func', None)
@@ -90,6 +93,7 @@ class Learner():
         store_attr(but='dls,model,cbs')
         self.training,self.create_mbar,self.logger,self.opt,self.cbs = False,True,print,None,L()
         self.add_cbs([(cb() if isinstance(cb, type) else cb) for cb in L(defaults.callbacks)+L(cbs)])
+        self.n_skip = 0
         self("after_create")
 
     @property
@@ -154,20 +158,21 @@ class Learner():
         try:       self(f'before_{event_type}')       ;f()
         except ex: self(f'after_cancel_{event_type}')
         finally:   self(f'after_{event_type}')        ;final()
+           
+           
+    def get_idxs(self):
+        return [x for x in range(self.n_skip,1000000)]
 
-    def all_batches(self,n_skip=1000):
+    def all_batches(self):
         print('abcp4')
         self.n_iter = len(self.dl)
-        for i in range(n_skip):
-           self.iter = i
-           self._skip_step()
+        self.dl.sample  = types.MethodType(get_idxs, dl)
+        #skip till last iteration
+        #skip till last iteration
          
         for o in enumerate(self.dl): self.one_batch(*o)
+        self.n_skip = 0 #completou todos os batches
                       
-    def _skip_step(self):
-        #print(self.lr)
-        self.opt.step()
-        self.opt.zero_grad()
         
     def _do_one_batch(self):
         self.pred = self.model(*self.xb)
