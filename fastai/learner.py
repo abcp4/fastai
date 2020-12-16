@@ -169,7 +169,6 @@ class Learner():
         for o in enumerate(self.dl): self.one_batch(*o)
 
     def _do_one_batch(self):
-        pass
         #self.pred = self.model(*self.xb)
         #self('after_pred')
         #if len(self.yb): self.loss = self.loss_func(self.pred, *self.yb)
@@ -178,15 +177,14 @@ class Learner():
         #self('before_backward')
         #self._backward()
         #self('after_backward')
-        #self._step()
+        self._step()
         #self('after_step')
         #self.opt.zero_grad()
 
     def one_batch(self, i, b):
         self.iter = i
-        #self._split(b)
-        print('i: ',i)
-        #self._with_events(self._do_one_batch, 'batch', CancelBatchException)
+        self._split(b)
+        self._with_events(self._do_one_batch, 'batch', CancelBatchException)
 
     def _do_epoch_train(self):
         self.dl = self.dls.train
