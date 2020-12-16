@@ -162,6 +162,7 @@ class Learner():
            
     def all_batches(self):
         print('abcp4')
+        self.n_iter = len(self.dl)
         #skip till last iteration
         #skip till last iteration
         for o in enumerate(self.dl): self.one_batch(*o)                      
