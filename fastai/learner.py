@@ -159,8 +159,8 @@ class Learner():
         print('abcp4')
         self.n_iter = len(self.dl)
         for i in range(self.n_iter):
-           #if(i<10000):
-           #   raise SkipItemException
+           if(i<10000):
+              raise SkipItemException
            #else:
            o=next(iter(self.dl))
            #if(i%100==0):
