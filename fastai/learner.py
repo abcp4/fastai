@@ -158,6 +158,7 @@ class Learner():
     def all_batches(self):
         print('abcp4')
         self.n_iter = len(self.dl)
+        self.dl.num_workers=4
         #for i in range(self.n_iter):
            #if(i<10000):
            #   raise SkipItemException
