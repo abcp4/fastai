@@ -155,10 +155,20 @@ class Learner():
         except ex: self(f'after_cancel_{event_type}')
         finally:   self(f'after_{event_type}')        ;final()
 
-    def all_batches(self):
+    def all_batches(self,n_skip=1000):
         print('abcp4')
         self.n_iter = len(self.dl)
+        for i in range(n_skip):
+           self._skip_step()
+         
         for o in enumerate(self.dl): self.one_batch(*o)
+                      
+    def _skip_step(self):
+        print(self.opt)
+        print(self.lr)
+        print(dir(self.opt)
+
+
 
     def _do_one_batch(self):
         self.pred = self.model(*self.xb)
