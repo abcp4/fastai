@@ -164,9 +164,8 @@ class Learner():
         for o in enumerate(self.dl): self.one_batch(*o)
                       
     def _skip_step(self):
-        print(self.opt)
         print(self.lr)
-        print(dir(self.opt))
+        self.opt.step()
     def _do_one_batch(self):
         self.pred = self.model(*self.xb)
         self('after_pred')
