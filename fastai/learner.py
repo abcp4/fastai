@@ -161,17 +161,17 @@ class Learner():
         for o in enumerate(self.dl): self.one_batch(*o)
 
     def _do_one_batch(self):
-        #self.pred = self.model(*self.xb)
+        self.pred = self.model(*self.xb)
         self('after_pred')
-        #if len(self.yb): self.loss = self.loss_func(self.pred, *self.yb)
+        if len(self.yb): self.loss = self.loss_func(self.pred, *self.yb)
         self('after_loss')
-        #if not self.training or not len(self.yb): return
+        if not self.training or not len(self.yb): return
         self('before_backward')
-        #self._backward()
+        self._backward()
         self('after_backward')
-        #self._step()
+        self._step()
         self('after_step')
-        #self.opt.zero_grad()
+        self.opt.zero_grad()
 
     def one_batch(self, i, b):
         self.iter = i
