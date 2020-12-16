@@ -167,9 +167,9 @@ class Learner():
         self('after_loss')
         if not self.training or not len(self.yb): return
         self('before_backward')
-        self._backward()
+        #self._backward()
         self('after_backward')
-        self._step()
+        #self._step()
         self('after_step')
         self.opt.zero_grad()
 
