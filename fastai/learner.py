@@ -11,7 +11,12 @@ from .optimizer import *
 from .callback.core import *
 
 import types
-
+def new_get_idxs():
+    print('sampling idxs')
+    from random import shuffle
+    a = [x for x in range(0,10000)]
+    shuffle(a)
+    return a
 
 # Cell
 #nbdev_comment _all_ = ['CancelFitException', 'CancelEpochException', 'CancelTrainException', 'CancelValidException', 'CancelBatchException']
@@ -159,12 +164,7 @@ class Learner():
         except ex: self(f'after_cancel_{event_type}')
         finally:   self(f'after_{event_type}')        ;final()
            
-    def new_get_idxs(self):
-        print('sampling idxs')
-        from random import shuffle
-        a = [x for x in range(0,10000)]
-        shuffle(a)
-        return a
+ 
 
     def all_batches(self):
         print('abcp4')
