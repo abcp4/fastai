@@ -11,12 +11,6 @@ from .optimizer import *
 from .callback.core import *
 
 import types
-def new_get_idxs(self):
-    print('sampling idxs')
-    from random import shuffle
-    a = [x for x in range(0,10000)]
-    shuffle(a)
-    return a
 
 # Cell
 #nbdev_comment _all_ = ['CancelFitException', 'CancelEpochException', 'CancelTrainException', 'CancelValidException', 'CancelBatchException']
@@ -168,11 +162,19 @@ class Learner():
 
     def all_batches(self):
         print('abcp4')
-        self.dl.get_idxs = types.MethodType(new_get_idxs, self.dl)
         self.n_iter = len(self.dl)
-        #skip till last iteration
-        #skip till last iteration
-        for o in enumerate(self.dl): self.one_batch(*o)                      
+        self.dl.before_iter()
+        b=[]
+        for i in tqdm(range(1000000)):
+            for j in range(64):
+                b.append(self.dl.do_item(i*64 + j))
+            if self.dl.device is not None: b = to_device(b, self.dl.device)
+            b=self.dl.after_batch(b)
+            self.one_batch(i,b)
+                      
+        self.dl.after_iter()
+        
+        #for o in enumerate(self.dl): self.one_batch(*o)                      
         
     def _do_one_batch(self):
         self.pred = self.model(*self.xb)
