@@ -11,7 +11,7 @@ from .optimizer import *
 from .callback.core import *
 
 import types
-def new_get_idxs():
+def new_get_idxs(self):
     print('sampling idxs')
     from random import shuffle
     a = [x for x in range(0,10000)]
