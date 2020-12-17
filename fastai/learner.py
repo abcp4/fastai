@@ -19,7 +19,6 @@ def dataset_iterator():
   shuffle(nums)
   for n in nums:
     yield n
-random_it = dataset_iterator()
 
 # Cell
 #nbdev_comment _all_ = ['CancelFitException', 'CancelEpochException', 'CancelTrainException', 'CancelValidException', 'CancelBatchException']
@@ -173,6 +172,7 @@ class Learner():
         self.n_iter = len(self.dl)
         self.dl.before_iter()
         b=[]
+        random_it = dataset_iterator()
         g=self.dl.create_batches(random_it)
         for i in tqdm(range(100000)):
             b = next(g)
