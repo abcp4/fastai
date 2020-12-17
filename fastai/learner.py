@@ -11,6 +11,12 @@ from .optimizer import *
 from .callback.core import *
 
 import types
+def dataset_iterator():
+  nums = [x for x in range(1000000)]
+  shuffle(nums)
+  for n in nums:
+    yield n
+random_it = dataset_iterator()
 
 # Cell
 #nbdev_comment _all_ = ['CancelFitException', 'CancelEpochException', 'CancelTrainException', 'CancelValidException', 'CancelBatchException']
@@ -158,20 +164,20 @@ class Learner():
         except ex: self(f'after_cancel_{event_type}')
         finally:   self(f'after_{event_type}')        ;final()
            
- 
+  
 
     def all_batches(self):
-        print('abcp4')
+        
         self.n_iter = len(self.dl)
         self.dl.before_iter()
         b=[]
+        g=self.dl.create_batches(random_it)
         for i in tqdm(range(1000000)):
-            for j in range(64):
-                b.append(self.dl.do_item(i*64 + j))
-            if self.dl.device is not None: b = to_device(b, self.dl.device)
+            b = next(g)
+            if self.dl.device is not None:
+                b = to_device(b, self.dl.device)
             b=self.dl.after_batch(b)
-            self.one_batch(i,b)
-                      
+            self.one_batch(i,b)     
         self.dl.after_iter()
         
         #for o in enumerate(self.dl): self.one_batch(*o)                      
