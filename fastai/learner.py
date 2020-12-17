@@ -11,6 +11,7 @@ from .optimizer import *
 from .callback.core import *
 
 import types
+import tqdm
 def dataset_iterator():
   nums = [x for x in range(1000049)]
   shuffle(nums)
