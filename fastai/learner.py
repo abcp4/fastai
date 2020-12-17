@@ -159,9 +159,16 @@ class Learner():
         except ex: self(f'after_cancel_{event_type}')
         finally:   self(f'after_{event_type}')        ;final()
            
-           
+    def new_get_idxs(self):
+        print('sampling idxs')
+        from random import shuffle
+        a = [x for x in range(0,10000)]
+        shuffle(a)
+        return a
+
     def all_batches(self):
         print('abcp4')
+        self.dl.get_idxs = types.MethodType(new_get_idxs, self.dl)
         self.n_iter = len(self.dl)
         #skip till last iteration
         #skip till last iteration
