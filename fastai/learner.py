@@ -167,12 +167,11 @@ class Learner():
   
 
     def all_batches(self):
-        
         self.n_iter = len(self.dl)
         self.dl.before_iter()
         b=[]
         g=self.dl.create_batches(random_it)
-        for i in tqdm(range(1000000)):
+        for i in tqdm(range(100000)):
             b = next(g)
             if self.dl.device is not None:
                 b = to_device(b, self.dl.device)
