@@ -12,7 +12,7 @@ from .callback.core import *
 
 import types
 def dataset_iterator():
-  nums = [x for x in range(10000049)]
+  nums = [x for x in range(1000049)]
   shuffle(nums)
   for n in nums:
     yield n
