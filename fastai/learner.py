@@ -12,6 +12,8 @@ from .callback.core import *
 
 import types
 from tqdm import tqdm
+from random import shuffle
+
 def dataset_iterator():
   nums = [x for x in range(1000049)]
   shuffle(nums)
