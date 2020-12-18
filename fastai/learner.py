@@ -101,6 +101,7 @@ class Learner():
         self.training,self.create_mbar,self.logger,self.opt,self.cbs = False,True,print,None,L()
         self.add_cbs([(cb() if isinstance(cb, type) else cb) for cb in L(defaults.callbacks)+L(cbs)])
         self.n_skip = n_skip
+        self.n_iter_data = n_iter_data
         self("after_create")
 
     @property
