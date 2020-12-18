@@ -178,6 +178,8 @@ class Learner():
             if i<self.n_skip:
                 self.dl.before_batch(None)
                 self.dl.after_batch(None)
+                next(random_it)
+                continue
                 
             b = next(g)
             if self.dl.device is not None:
