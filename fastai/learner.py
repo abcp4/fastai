@@ -91,7 +91,7 @@ _loop = ['Start Fit', 'before_fit', 'Start Epoch Loop', 'before_epoch', 'Start T
 class Learner():
     def __init__(self, dls, model, loss_func=None, opt_func=Adam, lr=defaults.lr, splitter=trainable_params, cbs=None,
                  metrics=None, path=None, model_dir='models', wd=None, wd_bn_bias=False, train_bn=True,
-                 moms=(0.95,0.85,0.95),n_skip=0):
+                 moms=(0.95,0.85,0.95),n_skip=100):
         path = Path(path) if path is not None else getattr(dls, 'path', Path('.'))
         if loss_func is None:
             loss_func = getattr(dls.train_ds, 'loss_func', None)
@@ -100,7 +100,7 @@ class Learner():
         store_attr(but='dls,model,cbs')
         self.training,self.create_mbar,self.logger,self.opt,self.cbs = False,True,print,None,L()
         self.add_cbs([(cb() if isinstance(cb, type) else cb) for cb in L(defaults.callbacks)+L(cbs)])
-        self.n_skip = 0
+        self.n_skip = n_skip
         self("after_create")
 
     @property
@@ -166,7 +166,6 @@ class Learner():
         except ex: self(f'after_cancel_{event_type}')
         finally:   self(f'after_{event_type}')        ;final()
            
-  
 
     def all_batches(self):
         print('learning rate: ',self.lr)
@@ -176,6 +175,10 @@ class Learner():
         random_it = dataset_iterator()
         g=self.dl.create_batches(random_it)
         for i in tqdm(range(1000)):
+            if i<self.n_skip:
+                self.dl.before_batch()
+                self.dl.after_batch()
+                
             b = next(g)
             if self.dl.device is not None:
                 b = to_device(b, self.dl.device)
