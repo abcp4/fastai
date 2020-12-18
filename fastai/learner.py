@@ -176,8 +176,8 @@ class Learner():
         g=self.dl.create_batches(random_it)
         for i in tqdm(range(1000)):
             if i<self.n_skip:
-                self.dl.before_batch()
-                self.dl.after_batch()
+                self.dl.before_batch(None)
+                self.dl.after_batch(None)
                 
             b = next(g)
             if self.dl.device is not None:
