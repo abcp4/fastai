@@ -15,7 +15,7 @@ from tqdm import tqdm
 from random import shuffle
 
 def dataset_iterator():
-  nums = [x for x in range(1000049)]
+  nums = [x for x in range(1000000)]
   shuffle(nums)
   for n in nums:
     yield n
