@@ -91,7 +91,7 @@ _loop = ['Start Fit', 'before_fit', 'Start Epoch Loop', 'before_epoch', 'Start T
 class Learner():
     def __init__(self, dls, model, loss_func=None, opt_func=Adam, lr=defaults.lr, splitter=trainable_params, cbs=None,
                  metrics=None, path=None, model_dir='models', wd=None, wd_bn_bias=False, train_bn=True,
-                 moms=(0.95,0.85,0.95),n_skip=0):
+                 moms=(0.95,0.85,0.95),n_skip=0,n_iter_data=1000049):
         path = Path(path) if path is not None else getattr(dls, 'path', Path('.'))
         if loss_func is None:
             loss_func = getattr(dls.train_ds, 'loss_func', None)
@@ -174,7 +174,7 @@ class Learner():
         b=[]
         random_it = dataset_iterator()
         g=self.dl.create_batches(random_it)
-        for i in tqdm(range(1000)):
+        for i in tqdm(range(n_iter_data)):
             if i<self.n_skip:
                 self.dl.before_batch(None)
                 self.dl.after_batch(None)
