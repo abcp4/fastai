@@ -169,12 +169,13 @@ class Learner():
   
 
     def all_batches(self):
+        print('learning rate: ',self.lr)
         self.n_iter = len(self.dl)
         self.dl.before_iter()
         b=[]
         random_it = dataset_iterator()
         g=self.dl.create_batches(random_it)
-        for i in tqdm(range(100000)):
+        for i in tqdm(range(1000)):
             b = next(g)
             if self.dl.device is not None:
                 b = to_device(b, self.dl.device)
