@@ -89,6 +89,7 @@ class ParamScheduler(Callback):
         for n,f in self.scheds.items(): self.opt.set_hyper(n, f(pct))
 
     def after_batch(self):
+        print('scheduler after batch: ',self.scheds)
         for p in self.scheds.keys(): self.hps[p].append(self.opt.hypers[-1][p])
 
     def after_fit(self):
