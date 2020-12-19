@@ -174,7 +174,7 @@ class Learner():
         self.dl.before_iter()
         b=[]
         random_it = dataset_iterator()
-        g=self.dl.create_batches(random_it)
+        g=iter(self.dl.create_batches(random_it))
         for i in tqdm(range(self.n_iter_data)):
             if i<self.n_skip:
                 self.dl.before_batch(None)
