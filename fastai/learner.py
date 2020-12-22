@@ -11,6 +11,7 @@ from .optimizer import *
 from .callback.core import *
 
 import types
+import time
 from tqdm import tqdm
 from random import shuffle
 
@@ -175,13 +176,15 @@ class Learner():
         b=[]
         random_it = dataset_iterator()
         g=iter(self.dl.create_batches(random_it))
-        #for i in tqdm(range(self.n_iter_data)):
-        for i in range(self.n_iter_data):
+        start_time = time.time()
+        for i in tqdm(range(self.n_iter_data)):
+        #for i in range(self.n_iter_data):
             if(i%1000==0):
-                print(i)
                 f = open("log.txt","a")
-                f.write(str(i)+ ' \n')
+                elapsed_time = time.time() - start_time
+                f.write(str(i)+', '+elapsed_time+ ' \n')
                 f.close()
+                start_time = time.time()
             if i<self.n_skip:
                 self.dl.before_batch(None)
                 self.dl.after_batch(None)
