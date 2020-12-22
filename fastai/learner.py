@@ -182,7 +182,7 @@ class Learner():
             if(i%1000==0):
                 f = open("log.txt","a")
                 elapsed_time = time.time() - start_time
-                f.write(str(i)+', '+elapsed_time+ ' \n')
+                f.write(str(i)+', '+str(elapsed_time)+ ' \n')
                 f.close()
                 start_time = time.time()
             if i<self.n_skip:
