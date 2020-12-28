@@ -185,7 +185,10 @@ class Learner():
                if(cond == False):
                    g=iter(self.dl.create_batches(random_it))
                    cond =  True
-               b=next(g)
+               try:
+                   b=next(g)
+               except StopIteration:
+                   continue       
                b = to_device(b, self.dl.device)
                self.one_batch(i,b)
                       
