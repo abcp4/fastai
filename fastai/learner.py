@@ -174,7 +174,7 @@ class Learner():
         print('learning rate: ',self.lr)
         self.n_iter = len(self.dl)
         cond = False
-        random_it = dataset_iterator()
+        random_it = dataset_iterator(0,self.n_iter)
         for i in tqdm(range(self.n_iter)):
            if i<self.n_skip:
                next(random_it)
