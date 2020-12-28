@@ -171,8 +171,8 @@ class Learner():
            
 
     def all_batches(self):
-        print('learning rate: ',self.lr)
         self.n_iter = len(self.dl)
+        print('n iter: ',self.n_iter)
         cond = False
         random_it = dataset_iterator(0,self.n_iter)
         for i in tqdm(range(self.n_iter)):
