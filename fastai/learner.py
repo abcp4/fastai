@@ -249,6 +249,7 @@ class Learner():
 
     def _do_epoch(self):
         self._do_epoch_train()
+        print("Now Validating. ")
         self._do_epoch_validate()
 
     def _do_fit(self):
