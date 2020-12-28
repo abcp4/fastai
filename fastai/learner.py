@@ -104,6 +104,7 @@ class Learner():
         self.add_cbs([(cb() if isinstance(cb, type) else cb) for cb in L(defaults.callbacks)+L(cbs)])
         self.n_skip = n_skip
         self.n_iter_data = n_iter_data
+        self.resume = True
         self("after_create")
 
     @property
@@ -176,12 +177,13 @@ class Learner():
         cond = False
         random_it = dataset_iterator(0,self.n_iter)
         for i in tqdm(range(self.n_iter)):
-           if i<self.n_skip:
+           if i<self.n_skip and self.resume:
                next(random_it)
                self.dl.before_batch(None)
                self.dl.after_batch(None)
                continue
            else:
+               self.resume = False#garante que  o resume so acontece uma vez
                if(cond == False):
                    g=iter(self.dl.create_batches(random_it))
                    cond =  True
