@@ -178,7 +178,8 @@ class Learner():
         for i in tqdm(range(self.n_iter)):
            if i<self.n_skip:
                next(random_it)
-               raise CancelBatchException
+               self.dl.before_batch(None)
+               self.dl.after_batch(None)
                continue
            else:
                if(cond == False):
