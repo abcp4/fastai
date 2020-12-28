@@ -14,10 +14,11 @@ import types
 import time
 from tqdm import tqdm
 from random import shuffle
+import random
 
-def dataset_iterator():
-  nums = [x for x in range(1000000)]
-  shuffle(nums)
+def dataset_iterator(a,b):
+  nums = [x for x in range(a,b)]
+  random.Random(4).shuffle(nums)
   for n in nums:
     yield n
 
@@ -172,6 +173,21 @@ class Learner():
     def all_batches(self):
         print('learning rate: ',self.lr)
         self.n_iter = len(self.dl)
+        cond = False
+        random_it = dataset_iterator()
+        for i in tqdm(range(self.n_iter)):
+           if i<self.n_skip:
+               next(random_it)
+               raise CancelBatchException
+               continue
+           else:
+               if(cond == False):
+                   g=iter(self.dl.create_batches(random_it))
+                   cond =  True
+               b=next(g)
+               b = to_device(b, self.dl.device)
+               self.one_batch(i,b)
+                      
         """
         self.dl.before_iter()
         b=[]
@@ -202,7 +218,7 @@ class Learner():
             self.one_batch(i,b)     
         self.dl.after_iter()
         """
-        for o in enumerate(self.dl): self.one_batch(*o)                      
+        #for o in enumerate(self.dl): self.one_batch(*o)                      
         
     def _do_one_batch(self):
         self.pred = self.model(*self.xb)
@@ -232,7 +248,7 @@ class Learner():
         with torch.no_grad(): self._with_events(self.all_batches, 'validate', CancelValidException)
 
     def _do_epoch(self):
-        #self._do_epoch_train()
+        self._do_epoch_train()
         self._do_epoch_validate()
 
     def _do_fit(self):
