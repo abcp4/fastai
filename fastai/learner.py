@@ -190,8 +190,9 @@ class Learner():
                try:
                    b=next(g)
                except StopIteration:
-                   continue       
-               b = to_device(b, self.dl.device)
+                   g=iter(self.dl.create_batches(random_it))
+               if self.dl.device is not None:
+                   b = to_device(b, self.dl.device)
                self.one_batch(i,b)
                       
         """
