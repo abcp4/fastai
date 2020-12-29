@@ -175,7 +175,7 @@ class Learner():
         self.n_iter = len(self.dl)
         print('n iter: ',self.n_iter)
         cond = False
-        random_it = dataset_iterator(0,self.n_iter)
+        random_it = dataset_iterator(self.n_iter)
         for i in tqdm(range(self.n_iter)):
            if i<self.n_skip and self.resume:
                next(random_it)
