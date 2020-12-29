@@ -17,7 +17,7 @@ from random import shuffle
 import random
 
 def dataset_iterator(a):
-  nums = [x for x in range(a)]
+  nums = [x for x in range(a*64)]
   random.Random(4).shuffle(nums)
   for n in nums:
     yield n
