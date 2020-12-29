@@ -16,8 +16,8 @@ from tqdm import tqdm
 from random import shuffle
 import random
 
-def dataset_iterator(a,b):
-  nums = [x for x in range(a,b)]
+def dataset_iterator(a):
+  nums = [x for x in range(a)]
   random.Random(4).shuffle(nums)
   for n in nums:
     yield n
@@ -185,13 +185,13 @@ class Learner():
            else:
                self.resume = False#garante que  o resume so acontece uma vez
                if(cond == False):
+                   print('creating batches')
                    g=iter(self.dl.create_batches(random_it))
                    cond =  True
                try:
                    b=next(g)
                except StopIteration:
-                   g=iter(self.dl.create_batches(random_it))
-                   b=next(g)
+                   continue
                if self.dl.device is not None:
                    b = to_device(b, self.dl.device)
                self.one_batch(i,b)
