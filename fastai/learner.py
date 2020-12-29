@@ -257,7 +257,7 @@ class Learner():
         with torch.no_grad(): self._with_events(self.all_batches, 'validate', CancelValidException)
 
     def _do_epoch(self):
-        self._do_epoch_train()
+        #self._do_epoch_train()
         print("Now Validating. ")
         self._do_epoch_validate()
 
