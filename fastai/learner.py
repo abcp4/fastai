@@ -17,7 +17,7 @@ from random import shuffle
 import random
 
 def dataset_iterator(a):
-  nums = [x for x in range(a*64)]
+  nums = [x for x in range(a)]
   random.Random(4).shuffle(nums)
   for n in nums:
     yield n
@@ -200,7 +200,7 @@ class Learner():
         
         self.dl.before_iter()
         b=[]
-        random_it = dataset_iterator()
+        random_it = dataset_iterator(self.n_iter)
         g=iter(self.dl.create_batches(random_it))
         start_time = time.time()
         for i in tqdm(range(self.n_iter_data)):
