@@ -203,8 +203,7 @@ class Learner():
         random_it = dataset_iterator(self.n_iter)
         g=iter(self.dl.create_batches(random_it))
         start_time = time.time()
-        for i in tqdm(range(self.n_iter_data)):
-        #for i in range(self.n_iter_data):
+        for i in tqdm(range(self.n_iter)):
             if(i%1000==0):
                 f = open("log.txt","a")
                 elapsed_time = time.time() - start_time
