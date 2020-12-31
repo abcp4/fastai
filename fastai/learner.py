@@ -197,7 +197,7 @@ class Learner():
                    b = to_device(b, self.dl.device)
                self.one_batch(i,b)
         """              
-        
+        """
         self.dl.before_iter()
         b=[]
         random_it = dataset_iterator(self.n_iter)
@@ -225,8 +225,8 @@ class Learner():
             b=self.dl.after_batch(b)
             self.one_batch(i,b)     
         self.dl.after_iter()
-        
-        #for o in enumerate(self.dl): self.one_batch(*o)                      
+        """
+        for o in enumerate(self.dl): self.one_batch(*o)                      
         
     def _do_one_batch(self):
         self.pred = self.model(*self.xb)
