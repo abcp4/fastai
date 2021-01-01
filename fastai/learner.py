@@ -197,7 +197,7 @@ class Learner():
                    b = to_device(b, self.dl.device)
                self.one_batch(i,b)
         """              
-        """
+        
         self.dl.before_iter()
         b=[]
         random_it = dataset_iterator(self.n_iter)
@@ -216,17 +216,17 @@ class Learner():
                 next(random_it)
                 continue
                 
-            #try:
-            b = next(g)
-            #except StopIteration:
-            #    g=iter(self.dl.create_batches(random_it))
+            try:
+                b = next(g)
+            except StopIteration,RuntimeError:
+                g=iter(self.dl.create_batches(random_it))
             if self.dl.device is not None:
                 b = to_device(b, self.dl.device)
             b=self.dl.after_batch(b)
             self.one_batch(i,b)     
         self.dl.after_iter()
-        """
-        for o in enumerate(self.dl): self.one_batch(*o)                      
+        
+        #for o in enumerate(self.dl): self.one_batch(*o)                      
         
     def _do_one_batch(self):
         self.pred = self.model(*self.xb)
