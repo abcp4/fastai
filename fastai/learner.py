@@ -216,20 +216,11 @@ class Learner():
             self.one_batch(i,b)     
         self.dl.after_iter()
         """
-        self.dl.randomize()
-        self.dl.before_iter()
-        self.dl.__idxs=self.dl.get_idxs() # called in context of main process (not workers/subprocesses)
-        c=0
-        for b in _loaders[self.dl.fake_l.num_workers==0](self.dl.fake_l):
-            if self.dl.device is not None:
-                b = to_device(b, self.dl.device)
-                b= self.dl.after_batch(b)
-                self.one_batch(c,b)
-            c+=1
-        self.dl.after_iter()
-        if hasattr(self.dl, 'it'): del(self.dl.it)
-        
-        #for o in enumerate(self.dl): self.one_batch(*o)                      
+        for i in range(self.n_skip):
+            self.dl.before_batch(None)
+            self.dl.after_batch(None)
+        for o in enumerate(self.dl,start=self.n_skip):
+           self.one_batch(*o)                      
         
     def _do_one_batch(self):
         self.pred = self.model(*self.xb)
