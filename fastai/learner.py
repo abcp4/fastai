@@ -218,8 +218,10 @@ class Learner():
                 
             try:
                 b = next(g)
-            except StopIteration,RuntimeError:
+            except StopIteration:
                 g=iter(self.dl.create_batches(random_it))
+            except RuntimeError:
+                g=iter(self.dl.create_batches(random_it))                                 
             if self.dl.device is not None:
                 b = to_device(b, self.dl.device)
             b=self.dl.after_batch(b)
