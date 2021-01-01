@@ -200,6 +200,8 @@ class Learner():
         
         self.dl.before_iter()
         b=[]
+        c1=0
+        c2=0
         random_it = dataset_iterator(self.n_iter)
         g=iter(self.dl.create_batches(random_it))
         start_time = time.time()
@@ -207,7 +209,7 @@ class Learner():
             if(i%1000==0):
                 f = open("log.txt","a")
                 elapsed_time = time.time() - start_time
-                f.write(str(i)+', '+str(elapsed_time)+ ' \n')
+                f.write(str(i)+', '+str(elapsed_time)+ 'c1: '+str(c1)+' c2: '+str(c2)+ ' \n')
                 f.close()
                 start_time = time.time()
             if i<self.n_skip:
@@ -219,9 +221,13 @@ class Learner():
             try:
                 b = next(g)
             except StopIteration:
+                c1+=1
                 g=iter(self.dl.create_batches(random_it))
+                b = next(g)
             except RuntimeError:
-                g=iter(self.dl.create_batches(random_it))                                 
+                c2+=1
+                g=iter(self.dl.create_batches(random_it))    
+                b = next(g)
             if self.dl.device is not None:
                 b = to_device(b, self.dl.device)
             b=self.dl.after_batch(b)
