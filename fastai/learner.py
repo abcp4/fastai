@@ -16,6 +16,10 @@ from tqdm import tqdm
 from random import shuffle
 import random
 
+from torch.utils.data.dataloader import _MultiProcessingDataLoaderIter,_SingleProcessDataLoaderIter,_DatasetKind
+_loaders = (_MultiProcessingDataLoaderIter,_SingleProcessDataLoaderIter)
+
+
 def dataset_iterator(a):
   nums = [x for x in range(a)]
   random.Random(4).shuffle(nums)
