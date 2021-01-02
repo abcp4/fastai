@@ -188,11 +188,7 @@ class Learner():
         g=iter(self.dl.create_batches(random_it))
         start_time = time.time()
         for i in tqdm(range(self.n_iter)):
-            if(i%1000==0):
-                f = open("log.txt","a")
-                elapsed_time = time.time() - start_time
-                f.write(str(i)+', '+str(elapsed_time)+ 'c1: '+str(c1)+' c2: '+str(c2)+ ' \n')
-                f.close()
+            
                 start_time = time.time()
             if i<self.n_skip:
                 self.dl.before_batch(None)
@@ -219,7 +215,13 @@ class Learner():
         for i in range(self.n_skip):
             self.dl.before_batch(None)
             self.dl.after_batch(None)
+        i=0
         for o in enumerate(self.dl,start=self.n_skip):
+           i+=1
+           if(i%10000==0):
+                f = open("log.txt","a")
+                f.write(str(i)+', '+ ' \n')
+                f.close()
            self.one_batch(*o)                      
         
     def _do_one_batch(self):
